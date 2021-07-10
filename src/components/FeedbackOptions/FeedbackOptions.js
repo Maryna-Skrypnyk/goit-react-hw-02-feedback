@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FeedbackButton = ({ feedback, onLeaveFeedback }) => (
-  <button type="button" data-feedback={feedback} onClick={onLeaveFeedback}>
+  <button
+    type="button"
+    key={feedback}
+    data-feedback={feedback}
+    onClick={onLeaveFeedback}
+  >
     {feedback}
   </button>
 );

@@ -10,18 +10,6 @@ import Statistics from './components/Statistics';
 import { FEEDBACK_OPTIONS } from './data/constanse';
 
 class App extends Component {
-  // static defaultProps = {
-  //     initialGood: 0,
-  //     initialNeutral: 0,
-  //     initialBad: 0,
-  //   };
-
-  //   static propTypes = {
-  //     initialGood: PropTypes.number,
-  //     initialNeutral: PropTypes.number,
-  //     initialBad: PropTypes.number,
-  //   };
-
   state = {
     good: 0,
     neutral: 0,
@@ -30,7 +18,7 @@ class App extends Component {
 
   handleFeedback = ({ target }) => {
     const { feedback } = target.dataset;
-    this.setState(prevState => ({ [feedback]: prevState.feedback + 1 }));
+    this.setState(prevState => ({ [feedback]: prevState[feedback] + 1 }));
   };
 
   countTotalFeedback = () => {
@@ -39,7 +27,7 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    const { good } = this.state.good;
+    const { good } = this.state;
     const total = this.countTotalFeedback();
     return total ? Math.round((good / total) * 100) : 0;
   };
@@ -47,29 +35,27 @@ class App extends Component {
   render() {
     const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
-    const positiveFeedbackPercentage = this.countPositiveFeedbackPercentage();
+    const positivePercentage = this.countPositiveFeedbackPercentage();
 
     return (
-      <>
-        <Layout>
-          <Section title="Please leave feedback">
-            <FeedbackOptions
-              options={FEEDBACK_OPTIONS}
-              onLeaveFeedback={this.handleFeedback}
-            />
-          </Section>
+      <Layout>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={FEEDBACK_OPTIONS}
+            onLeaveFeedback={this.handleFeedback}
+          />
+        </Section>
 
-          <Section title="Statistics">
-            <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={total}
-              positiveFeedbackPercentage={positiveFeedbackPercentage}
-            />
-          </Section>
-        </Layout>
-      </>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        </Section>
+      </Layout>
     );
   }
 }
