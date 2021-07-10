@@ -1,25 +1,77 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Layout from './components/Layout';
+
+import Section from './components/Section';
+import FeedbackOptions from './components/FeedbackOptions';
+import Statistics from './components/Statistics';
+
+import { FEEDBACK_OPTIONS } from './data/constanse';
+
+class App extends Component {
+  // static defaultProps = {
+  //     initialGood: 0,
+  //     initialNeutral: 0,
+  //     initialBad: 0,
+  //   };
+
+  //   static propTypes = {
+  //     initialGood: PropTypes.number,
+  //     initialNeutral: PropTypes.number,
+  //     initialBad: PropTypes.number,
+  //   };
+
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  handleFeedback = ({ target }) => {
+    const { feedback } = target.dataset;
+    this.setState(prevState => ({ [feedback]: prevState.feedback + 1 }));
+  };
+
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const { good } = this.state.good;
+    const total = this.countTotalFeedback();
+    return total ? Math.round((good / total) * 100) : 0;
+  };
+
+  render() {
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const positiveFeedbackPercentage = this.countPositiveFeedbackPercentage();
+
+    return (
+      <>
+        <Layout>
+          <Section title="Please leave feedback">
+            <FeedbackOptions
+              options={FEEDBACK_OPTIONS}
+              onLeaveFeedback={this.handleFeedback}
+            />
+          </Section>
+
+          <Section title="Statistics">
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positiveFeedbackPercentage={positiveFeedbackPercentage}
+            />
+          </Section>
+        </Layout>
+      </>
+    );
+  }
 }
 
 export default App;
