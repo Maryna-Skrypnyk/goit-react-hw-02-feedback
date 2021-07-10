@@ -1,16 +1,13 @@
-import React from 'react';
+// import React from 'react';
 import PropTypes from 'prop-types';
 
-const FeedbackButton = ({ feedback, onLeaveFeedback }) => (
-  <button
-    type="button"
-    key={feedback}
-    data-feedback={feedback}
-    onClick={onLeaveFeedback}
-  >
-    {feedback}
-  </button>
-);
+const FeedbackButton = ({ feedback, onLeaveFeedback }) => {
+  return (
+    <button type="button" data-feedback={feedback} onClick={onLeaveFeedback}>
+      {feedback}
+    </button>
+  );
+};
 
 const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return options.map(option => (
