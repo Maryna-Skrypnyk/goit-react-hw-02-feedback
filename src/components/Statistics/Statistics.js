@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 
 import Notification from '../Notification';
 
+import styles from './Statistics.module.scss';
+
 const Statistics = ({ good, neutral, bad, total, positivePercentage }) => (
   <>
     {total > 0 && (
-      <ul>
-        <li>Good: {good}</li>
-        <li>Neutral: {neutral}</li>
-        <li>Bad: {bad}</li>
-        <li>Total: {total}</li>
-        <li>Positive feedback: {positivePercentage}</li>
+      <ul className={styles.StatisticsList}>
+        <li className={styles.StatisticsItem}>Good: {good}</li>
+        <li className={styles.StatisticsItem}>Neutral: {neutral}</li>
+        <li className={styles.StatisticsItem}>Bad: {bad}</li>
+        <li className={styles.StatisticsItem}>Total: {total}</li>
+        <li className={styles.StatisticsItem}>
+          Positive feedback: {positivePercentage}%
+        </li>
       </ul>
     )}
     {total === 0 && <Notification message="No feedback given" />}

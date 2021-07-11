@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 
-import Layout from './components/Layout';
+import Layout from '../components/Layout';
 
-import Section from './components/Section';
-import FeedbackOptions from './components/FeedbackOptions';
-import Statistics from './components/Statistics';
+import Section from '../components/Section';
+import FeedbackOptions from '../components/FeedbackOptions';
+import Statistics from '../components/Statistics';
 
-import { FEEDBACK_OPTIONS } from './data/constanse';
+import { FEEDBACK_OPTIONS } from '../data/constanse';
 
 class App extends Component {
   state = {
@@ -16,8 +15,14 @@ class App extends Component {
     bad: 0,
   };
 
-  handleFeedback = ({ target }) => {
-    const { feedback } = target.dataset;
+  // handleFeedback = ({ target }) => {
+  //   const { feedback } = target.dataset;
+  //   console.log({ feedback });
+  //   this.setState(prevState => ({ [feedback]: prevState[feedback] + 1 }));
+  // };
+
+  handleFeedback = e => {
+    const { feedback } = e.target.dataset;
     this.setState(prevState => ({ [feedback]: prevState[feedback] + 1 }));
   };
 
